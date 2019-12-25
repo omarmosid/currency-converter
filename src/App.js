@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { createGlobalStyle } from 'styled-components'
+import Row from './components/reusable/layout/row/row'
+import InputCurrencyContainer from './components/input-currency/input-currency-container'
+import OutputCurrencyContainer from './components/output-currency/output-currency-container'
+import FinalCurrencyContainer from './components/final-currency/final-currency-container'
 
-function App() {
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0px;
+    padding: 0px;
+    background: #171717;
+    color: #9D9D9D;
+  }
+`
+
+const App = () => {
+  const [inputCurrency, setInputCurrency] = useState('USD');
+  const [inputValue, setInputValue] = useState(0);
+  const [outputCurrency, setOutputCurrency] = useState('INR');
+
+  const handleInputCurrencyChange = (e) => {
+    setInputCurrency(e.target.value)
+  }
+
+  const handleInputValueChange = (e) => {
+    setInputValue(e.target.value)
+  }
+
+  const handleOutputCurrencyChange = (e) => {
+    setOutputCurrency(e.target.value)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <React.Fragment>
+      <GlobalStyle />
+      <Row>
+        <h1>Currency Converter</h1>
+      </Row>
+      <Row>
+        <InputCurrencyContainer
+          inputCurrency={inputCurrency}
+          inputValue={inputValue}
+          handleInputCurrencyChange={handleInputCurrencyChange}
+          handleInputValueChange={handleInputValueChange}
+        />
+        <OutputCurrencyContainer
+          outputCurrency={outputCurrency}
+          handleOutputCurrencyChange={handleOutputCurrencyChange}
+        />
+        <FinalCurrencyContainer
+          inputCurrency={inputCurrency}
+          outputCurrency={outputCurrency}
+          inputValue={inputValue}
+        />
+      </Row>
+    </React.Fragment>
+  )
 }
 
-export default App;
+export default App
